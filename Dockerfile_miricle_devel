@@ -1,0 +1,25 @@
+FROM continuumio/anaconda
+
+RUN apt-get update && apt-get install -y \
+    libx11-dev \
+    libgl1-mesa-dev \
+    gcc \
+    g++ \
+    make
+
+ENV MIRICLE_ROOT /opt/MIRICLE
+ENV PYSYN_CDBS $MIRICLE_ROOT/cdbs/
+ENV CRDS_PATH $MIRICLE_ROOT/CRDS
+ENV CDP_DIR $MIRICLE_ROOT/CDP
+ENV CRDS_SERVER_URL "https://jwst-crds.stsci.edu"
+
+RUN mkdir -p $MIRICLE_ROOT && \
+    mkdir -p $CRDS_PATH && \
+    mkdir -p $CDP_DIR && \
+    mkdir -p $HOME/simulations && \
+    mkdir -p $HOME/repos
+
+RUN wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
+    bash MIRICLE_install.bash --devel
+
+WORKDIR /root/simulations
