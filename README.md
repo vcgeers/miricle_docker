@@ -22,29 +22,52 @@ Once a Docker image has been built, you can create as many instances (so-called 
 
 ## Building a MIRICLE Docker image
 
-To get started, download / clone this repo, open a terminal, and change directory to your local repo. 
+To get started:
 
-To build e.g. the "stable" MIRICLE image, run:
+1. Ensure Docker is installed and running (ensure it has 4-8GB of RAM allocated, to run MIRI simulations)
+
+2. Download / clone this repo
+
+3. Open a terminal, and change directory to local repo
+
+4. To build e.g. the "stable" MIRICLE image, run:
+
 `build_miricle_stable.sh`
 
 Ensure the script has been made executable (`chmod 755 build_miricle_stable.sh`), or alternatively run `sh build_miricle_stable.sh`.
 
-## Running a MIRICLE Docker container from a pre-built image
-`docker run -it --rm miriec/miricle_test /bin/bash`
+## Running a MIRICLE Docker container
+
+A simple example to launch an instance of the MIRICLE "stable" image:
+
+`docker run -it --rm miriec/miricle_stable /bin/bash`
+
+Example to launch an instance of MIRICLE "test" image, while creating a link between a "scratch" directory on host machine, and the "simulations" path inside the Docker container. By default, simulations run within the Docker container will store output under the "/root/simulations" path, and the link will ensure that those simulations are available on the host machine, and will persist even after the container is removed.
+
+`docker run -it --rm -v <absolute_path_to_local_scratch_directory>:/root/simulations miriec/miricle_test /bin/bash`
+
+Example to launch an instance of MIRICLE "devel" image, while creating a link between local repository checkouts and the "repos" path inside the Docker container. This can be used by developers to e.g. install a custom revision into conda / MIRICLE.
+
+`docker run -it --rm -v <absolute_path_to_local_repositories>:/root/repos miriec/miricle_devel /bin/bash`
 
 ## Useful Docker commands
 
 Command line help:
+
 `docker help`
 
 To check which Docker images are available on your system:
+
 `docker images`
 
 To check which Docker containers are running/stopped:
+
 `docker ps -a`
 
 To remove a stopped container:
+
 `docker rm <id_of_container>`
 
 To remove an image:
+
 `docker rmi <id_of_image>`
