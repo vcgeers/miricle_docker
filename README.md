@@ -21,14 +21,16 @@ Once a Docker image has been built, you can create as many instances (so-called 
 ## Building a MIRICLE Docker image
 To get started:
 
-1. Ensure Docker is installed and running (ensure it has 4-8GB of RAM allocated, to run MIRI simulations)
-2. Download / clone this repo
-3. Open a terminal, and change directory to local repo
+1. Ensure Docker is installed and running.
+2. In Docker Preferences, ensure it has 4-8 GB RAM allocated, to run MIRI simulations.
+3. Download / clone this repo, and step into directory.
+
+`git clone https://github.com/vcgeers/miricle_docker`
+`cd miricle_docker`
+
 4. To build e.g. the "stable" MIRICLE image, run:
 
 `build_miricle_stable.sh`
-
-Ensure the script has been made executable (`chmod 755 build_miricle_stable.sh`), or alternatively run `sh build_miricle_stable.sh`.
 
 ## Running a MIRICLE Docker container
 A simple example to launch an instance of the MIRICLE "stable" image:
