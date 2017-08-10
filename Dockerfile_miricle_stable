@@ -1,26 +1,31 @@
 FROM continuumio/anaconda
 MAINTAINER Vincent Geers <vincent.geers@stfc.ac.uk>
 
+# Update and install dependencies
 RUN apt-get update && apt-get install -y \
-    libx11-dev \
-    libgl1-mesa-dev \
-    gcc \
     g++ \
+    gcc \
+    libgl1-mesa-dev \
+    libx11-dev \
     make
 
+# Set environment variables for MIRICLE
 ENV MIRICLE_ROOT /opt/MIRICLE
-ENV PYSYN_CDBS $MIRICLE_ROOT/cdbs/
-ENV CRDS_PATH $MIRICLE_ROOT/CRDS
 ENV CDP_DIR $MIRICLE_ROOT/CDP
+ENV CRDS_PATH $MIRICLE_ROOT/CRDS
 ENV CRDS_SERVER_URL "https://jwst-crds.stsci.edu"
+ENV PYSYN_CDBS $MIRICLE_ROOT/cdbs/
 
-RUN mkdir -p $MIRICLE_ROOT && \
+# Create standard directories
+RUN mkdir -p $CDP_DIR && \
     mkdir -p $CRDS_PATH && \
-    mkdir -p $CDP_DIR && \
+    mkdir -p $HOME/repos && \
     mkdir -p $HOME/simulations && \
-    mkdir -p $HOME/repos
+    mkdir -p $MIRICLE_ROOT
 
+# Download and run MIRICLE install script
 RUN wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
     bash MIRICLE_install.bash
 
+# Set default working directory
 WORKDIR /root/simulations
