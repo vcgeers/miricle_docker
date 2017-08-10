@@ -26,6 +26,7 @@ To get started:
 3. Download / clone this repo, and step into directory.
 
 `git clone https://github.com/vcgeers/miricle_docker`
+
 `cd miricle_docker`
 
 4. To build e.g. the "stable" MIRICLE image, run:
