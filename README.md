@@ -1,11 +1,9 @@
 # miricle_docker
-
 Scripts to create Docker images with Anaconda (https://www.continuum.io/what-is-anaconda) and MIRICLE (www.miricle.org).
 
 The "Dockerfile_\<xyz\>" are files required by Docker to build images. The shell scripts provide examples of docker commands that will build the images from the Dockerfiles.
 
 ## Installing Docker
-
 These scripts require Docker to be pre-installed. To get started, visit: https://www.docker.com/get-docker
 
 ## Available MIRICLE Docker images
@@ -21,15 +19,11 @@ The scripts provided here can be used to create a so-called Docker "image", whic
 Once a Docker image has been built, you can create as many instances (so-called Docker "containers") of this pre-build machine to use for running the MIRICLE software.
 
 ## Building a MIRICLE Docker image
-
 To get started:
 
 1. Ensure Docker is installed and running (ensure it has 4-8GB of RAM allocated, to run MIRI simulations)
-
 2. Download / clone this repo
-
 3. Open a terminal, and change directory to local repo
-
 4. To build e.g. the "stable" MIRICLE image, run:
 
 `build_miricle_stable.sh`
@@ -37,7 +31,6 @@ To get started:
 Ensure the script has been made executable (`chmod 755 build_miricle_stable.sh`), or alternatively run `sh build_miricle_stable.sh`.
 
 ## Running a MIRICLE Docker container
-
 A simple example to launch an instance of the MIRICLE "stable" image:
 
 `docker run -it --rm miriec/miricle_stable /bin/bash`
@@ -50,8 +43,17 @@ Example to launch an instance of MIRICLE "devel" image, while creating a link be
 
 `docker run -it --rm -v <absolute_path_to_local_repositories>:/root/repos miriec/miricle_devel /bin/bash`
 
-## Useful Docker commands
+## Building and running a specific version of MIRICLE
+By default, the build scripts will install the latest available version of MIRICLE. To build and run a specific version, e.g. 30, of MIRICLE:
 
+1. `build_miricle_test.sh 30`
+2. `docker run -it --rm miriec/miricle_stable:30 /bin/bash`
+
+To find available versions:
+- Linux: [Stable](http://www.miricle.org/jenkins/job/Build%20Stable/), [Test](http://www.miricle.org/jenkins/job/Build%20Test/), [Devel](http://www.miricle.org/jenkins/job/Build%20Devel/)
+- Mac: [Stable](http://www.miricle.org/jenkins/job/Build%20Stable%20Mac/), [Test](http://www.miricle.org/jenkins/job/Build%20Test%20Mac/), [Devel](http://www.miricle.org/jenkins/job/Build%20Devel%20Mac/)
+
+## Useful Docker commands
 Command line help:
 
 `docker help`
@@ -71,3 +73,7 @@ To remove a stopped container:
 To remove an image:
 
 `docker rmi <id_of_image>`
+
+To remove unused data from Docker cache (unused images, containers, volumes, networks):
+
+`docker system prune`
