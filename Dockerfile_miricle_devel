@@ -27,5 +27,8 @@ RUN mkdir -p $CDP_DIR && \
 RUN wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
     bash MIRICLE_install.bash --devel
 
+# Create bashrc to always activate conda env.
+RUN echo "source activate miricle.devel" >> $HOME/.bashrc
+
 # Set default working directory
 WORKDIR /root/simulations
