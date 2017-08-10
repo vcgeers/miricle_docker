@@ -1,6 +1,9 @@
 FROM continuumio/anaconda
 MAINTAINER Vincent Geers <vincent.geers@stfc.ac.uk>
 
+# Input arguments
+ARG version
+
 # Update and install dependencies
 RUN apt-get update && apt-get install -y \
     g++ \
@@ -24,8 +27,12 @@ RUN mkdir -p $CDP_DIR && \
     mkdir -p $MIRICLE_ROOT
 
 # Download and run MIRICLE install script
-RUN wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
-    bash MIRICLE_install.bash --test
+RUN if [ "x$version" = "x" ] ; then \
+    wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
+    bash MIRICLE_install.bash --test ; \
+    else \
+    wget http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash && \
+    bash MIRICLE_install.bash --test --version $version ; fi
 
 # Create bashrc to always activate conda env.
 RUN echo "source activate miricle.test" >> $HOME/.bashrc
